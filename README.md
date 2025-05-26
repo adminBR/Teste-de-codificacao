@@ -2,9 +2,23 @@
 
 Este projeto é uma API RESTful desenvolvida com **FastAPI** para atender às necessidades do time comercial da empresa Lu Estilo, facilitando a gestão de clientes, produtos e pedidos
 
-### Fluxo
+### Suposições e Decisões de Implementação
 
-Cada usuário pode ser administrador ou usuário comum. Todos os métodos GET estão liberados para autenticação básica, porém os métodos POST, PUT e DELETE são reservados apenas para usuários administradores nos routers: clients, products e orders.
+Como o documento original não especifica certos detalhes, algumas suposições foram adotadas para garantir o funcionamento completo da API:
+
+Armazenamento de Imagens: Presume-se que as imagens dos produtos sejam armazenadas em um bucket externo (como AWS S3, Google Cloud Storage, etc.). No banco de dados, foi criada uma coluna para armazenar apenas a URL da imagem.
+
+Relacionamento de Imagens com Produtos:  imagens foram organizadas em uma tabela separada, permitindo que cada produto possua múltiplas imagens. A exclusão de um produto é feita em cascata, removendo automaticamente todas as imagens relacionadas.
+
+Modelagem de Pedidos: Os pedidos armazenam apenas informações básicas, enquanto os detalhes de cada item do pedido (como quantidade, valor e informações do produto) são salvos em uma tabela separada chamada items_pedidos. A exclusão de um pedido também ocorre em cascata, removendo os itens relacionados.
+
+Controle de Acesso (Autorização): Como o controle de acesso não foi especificado, foi adotado o seguinte padrão para as operações CRUD:
+
+GET – permitido para usuários comuns e administradores.
+
+POST, PUT, DELETE – restritos a usuários administradores.
+
+Endpoints de registro, login e refresh token disponíveis tanto para usuários comuns quanto administradores.
 
 ## Como Rodar o Projeto
 
