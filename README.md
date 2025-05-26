@@ -23,6 +23,9 @@ cd seu-repo
 docker compose build
 docker compose up
 ```
+O DDL do banco se encontra em:
+
+- `/backend/utils/ddl.sql`
 
 É possivel testar com o commando:
 
